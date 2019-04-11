@@ -16,16 +16,16 @@ class CommunicationsMonitor {
 
     }
 
-    List<ComputerNode> queryInfection(int c1, int c2, int x, y) {
-        
+    List<ComputerNode> queryInfection(int c1, int c2, int x, int y) {
+        return null;
     }
 
     HashMap<Integer, List<ComputerNode>> getComputerMapping() {
-
+        return null;
     }
 
     List<ComputerNode> getComputerMapping(int c) {
-
+        return null;
     }
 
     public static void main(String[] args) {
