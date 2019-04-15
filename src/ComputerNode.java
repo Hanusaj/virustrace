@@ -1,14 +1,29 @@
 import java.util.List;
+import java.util.LinkedList;
 
 class ComputerNode {
+
+    int ID;
+    int timestamp;
+
+    List<ComputerNode> outNodes;
+
+    ComputerNode(int id, int time) {
+        this.ID = id;
+        this.timestamp = time;
+        this.outNodes = new LinkedList<ComputerNode>();
+    }
+
     int getID() {
-        System.out.println("Implement get ID.");
-        return -1;
+        return this.ID;
     }
 
     int getTimestamp() {
-        System.out.print("Implement get Timestamp.");
-        return -1;
+        return this.timestamp;
+    }
+
+    void addEdge(ComputerNode cn) {
+        this.outNodes.add(cn);
     }
 
     List<ComputerNode> getOutNeighbors() {
