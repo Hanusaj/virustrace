@@ -1,7 +1,8 @@
-import java.util.HashMap;
-import java.util.List;
-import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 class CommunicationsMonitor {
 
@@ -18,11 +19,47 @@ class CommunicationsMonitor {
     }
 
     void createGraph() {
-        triples.sort();
-        for(int i = 0; i < triples.size(); i++) {
-            int[] currentTriple = triples.get(i);
-            ComputerNode cn1 = new ComputerNode(currentTriple[0], currentTriple[2]);
-            ComputerNode cn2 = new ComputerNode(currentTriple[1], currentTriple[2]);
+        triples.sort(new Comparator<int[]>() {
+			@Override
+			public int compare(int[] arg0, int[] arg1) {
+				return arg0[2] - arg1[2];
+			}
+        });
+        for(int[] currentTriple: triples) {
+        	List<ComputerNode> cn1list = computers.get(currentTriple[0]);
+        	List<ComputerNode> cn2list = computers.get(currentTriple[1]);
+        	ComputerNode cn1 = null;
+        	ComputerNode cn2 = null;
+        	if(cn1list != null) {
+        		for(ComputerNode c: cn1list) {
+        			if(c.getID() == currentTriple[0] && c.getTimestamp() == currentTriple[2]) {
+        				cn1 = c;
+        				break;
+        			}
+        		}
+        	} else {
+        		cn1list = new LinkedList<ComputerNode>();
+        		computers.put(currentTriple[0], cn1list);
+        	}
+        	if(cn1 == null) {
+        		cn1 = new ComputerNode(currentTriple[0], currentTriple[2]);
+        		cn1list.add(cn1);
+        	}
+        	if(cn2list != null) {
+        		for(ComputerNode c: cn2list) {
+        			if(c.getID() == currentTriple[1] && c.getTimestamp() == currentTriple[2]) {
+        				cn2 = c;
+        				break;
+        			}
+        		}
+        	} else {
+        		cn2list = new LinkedList<ComputerNode>();
+        		computers.put(currentTriple[1], cn2list);
+        	}
+        	if(cn2 == null) {
+        		cn2 = new ComputerNode(currentTriple[1], currentTriple[2]);
+        		cn2list.add(cn2);
+        	}
         }
     }
 
