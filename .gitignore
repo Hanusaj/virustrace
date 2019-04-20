@@ -3,3 +3,7 @@
 /bin/.vscode/launch.json
 /bin/CommunicationsMonitor.class
 /bin/ComputerNode.class
+/bin/ComputerNode$Color.class
+/bin/CommunicationsMonitor$1.class
+**.class
+/bin/CommunicationsMonitor$1.class

@@ -3,30 +3,63 @@ import java.util.LinkedList;
 
 class ComputerNode {
 
-    int ID;
-    int timestamp;
+	int ID;
+	int timestamp;
 
-    List<ComputerNode> outNodes;
+	enum Color {
+		WHITE, GRAY, BLACK;
+	}
 
-    ComputerNode(int id, int time) {
-        this.ID = id;
-        this.timestamp = time;
-        this.outNodes = new LinkedList<ComputerNode>();
-    }
+	Color color;
+	int dist;
+	
+	public Color getColor() {
+		return color;
+	}
 
-    int getID() {
-        return this.ID;
-    }
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
-    int getTimestamp() {
-        return this.timestamp;
-    }
+	public int getDist() {
+		return dist;
+	}
 
-    void addEdge(ComputerNode cn) {
-        this.outNodes.add(cn);
-    }
+	public void setDist(int dist) {
+		this.dist = dist;
+	}
 
-    List<ComputerNode> getOutNeighbors() {
-        return null;
-    }
+	public ComputerNode getPred() {
+		return pred;
+	}
+
+	public void setPred(ComputerNode pred) {
+		this.pred = pred;
+	}
+
+	ComputerNode pred;
+
+	List<ComputerNode> outNodes;
+
+	ComputerNode(int id, int time) {
+		this.ID = id;
+		this.timestamp = time;
+		this.outNodes = new LinkedList<ComputerNode>();
+	}
+
+	int getID() {
+		return this.ID;
+	}
+
+	int getTimestamp() {
+		return this.timestamp;
+	}
+
+	void addEdge(ComputerNode cn) {
+		this.outNodes.add(cn);
+	}
+
+	List<ComputerNode> getOutNeighbors() {
+		return null;
+	}
 }
