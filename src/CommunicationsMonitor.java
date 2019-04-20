@@ -32,7 +32,7 @@ class CommunicationsMonitor {
         	ComputerNode cn2 = null;
         	if(cn1list != null) {
         		for(ComputerNode c: cn1list) {
-        			if(c.getID() == currentTriple[0] && c.getTimestamp() == currentTriple[2]) {
+        			if(c.getTimestamp() == currentTriple[2]) {
         				cn1 = c;
         				break;
         			}
@@ -43,11 +43,14 @@ class CommunicationsMonitor {
         	}
         	if(cn1 == null) {
         		cn1 = new ComputerNode(currentTriple[0], currentTriple[2]);
+        		if(cn1list.size() > 0) {
+            		((LinkedList<ComputerNode>)cn1list).getLast().addEdge(cn1);
+            	}
         		cn1list.add(cn1);
         	}
         	if(cn2list != null) {
         		for(ComputerNode c: cn2list) {
-        			if(c.getID() == currentTriple[1] && c.getTimestamp() == currentTriple[2]) {
+        			if(c.getTimestamp() == currentTriple[2]) {
         				cn2 = c;
         				break;
         			}
@@ -58,8 +61,13 @@ class CommunicationsMonitor {
         	}
         	if(cn2 == null) {
         		cn2 = new ComputerNode(currentTriple[1], currentTriple[2]);
+            	if(cn2list.size() > 0) {
+            		((LinkedList<ComputerNode>)cn2list).getLast().addEdge(cn2);
+            	}
         		cn2list.add(cn2);
         	}
+        	cn1.addEdge(cn2);
+        	cn2.addEdge(cn1);
         }
     }
 
