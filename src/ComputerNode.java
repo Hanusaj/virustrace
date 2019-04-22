@@ -1,3 +1,5 @@
+package src;
+
 import java.util.List;
 import java.util.LinkedList;
 
@@ -52,5 +54,9 @@ class ComputerNode {
 
 	List<ComputerNode> getOutNeighbors() {
 		return this.outNodes;
+	}
+	
+	public String toString(){
+		return "(" + String.valueOf(ID) + ", " + String.valueOf(timestamp) + ")";
 	}
 }
