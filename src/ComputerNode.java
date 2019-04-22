@@ -1,17 +1,16 @@
 import java.util.List;
 import java.util.LinkedList;
 
+enum Color {
+	WHITE, GRAY, BLACK;
+}
+
 class ComputerNode {
 
 	int ID;
 	int timestamp;
 
-	enum Color {
-		WHITE, GRAY, BLACK;
-	}
-
 	Color color;
-	int dist;
 	
 	public Color getColor() {
 		return color;
@@ -19,14 +18,6 @@ class ComputerNode {
 
 	public void setColor(Color color) {
 		this.color = color;
-	}
-
-	public int getDist() {
-		return dist;
-	}
-
-	public void setDist(int dist) {
-		this.dist = dist;
 	}
 
 	public ComputerNode getPred() {
@@ -60,6 +51,6 @@ class ComputerNode {
 	}
 
 	List<ComputerNode> getOutNeighbors() {
-		return null;
+		return this.outNodes;
 	}
 }

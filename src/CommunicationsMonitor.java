@@ -5,17 +5,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import ComputerNode.Color;
-
 class CommunicationsMonitor {
-	
-	
 
 	HashMap<Integer, List<ComputerNode>> computers;
 	ArrayList<int[]> triples;
 
 	CommunicationsMonitor() {
 		this.computers = new HashMap<Integer, List<ComputerNode>>();
+		this.triples = new ArrayList<>();
 	}
 
 	void addCommunication(int c1, int c2, int timestamp) {
@@ -77,40 +74,70 @@ class CommunicationsMonitor {
 	}
 
 	List<ComputerNode> queryInfection(int c1, int c2, int x, int y) {
+		ComputerNode source = null;
+		ComputerNode target = null;
+		for (ComputerNode c1Node : computers.get(c1)) {
+			if (c1Node.timestamp >= x) {
+				source = c1Node;
+				break;
+			}
+		}
+		if (source != null) {
+			target = BFSQuery(source, c2, y);
+			if (target != null) {
+				LinkedList<ComputerNode> ret = new LinkedList<>();
+				while(target != null) {
+					ret.addFirst(target);
+					target = target.getPred();
+				}
+				return ret;
+			}
+		}
 		return null;
 	}
 
 	HashMap<Integer, List<ComputerNode>> getComputerMapping() {
-		return null;
+		return computers;
 	}
 
 	List<ComputerNode> getComputerMapping(int c) {
-		return null;
+		return computers.get(c);
 	}
 
-	int BFSQuery(ComputerNode source, ComputerNode target) {
-		Comparator computerNodeComparator = new Comparator<ComputerNode>() {
-			@Override
-			public int compare(ComputerNode arg0, ComputerNode arg1) {
-				return arg0.getDist() - arg1.getDist();
-			}
-		};
-		PriorityQueue<ComputerNode> Q = new PriorityQueue<ComputerNode>(computerNodeComparator);
+	ComputerNode BFSQuery(ComputerNode source, int targetComp, int deadline) {
+		LinkedList<ComputerNode> Q = new LinkedList<ComputerNode>();
 
 		for (int c : computers.keySet()) {
 			for (ComputerNode cn : computers.get(c)) {
 				if (cn != source) {
-					cn.setColor(Color.WHITE);
-					cn.setDist(Integer.MAX_VALUE);
+					if (cn.getTimestamp() > deadline)
+						cn.setColor(Color.BLACK);
+					else
+						cn.setColor(Color.WHITE);
 					cn.setPred(null);
 				}
 			}
 		}
 		source.setColor(Color.GRAY);
-		source.setDist(0);
 		source.setPred(null);
+		Q.addLast(source);
+		ComputerNode u;
+		while (Q.size() > 0) {
+			u = Q.peek();
+			for (ComputerNode v : u.getOutNeighbors()) {
+				if (v.getColor() == Color.WHITE) {
+					v.setColor(Color.GRAY);
+					v.setPred(u);
+					Q.addLast(v);
+					if (v.getID() == targetComp)
+						return v;
+				}
+			}
+			Q.pop();
+			u.setColor(Color.BLACK);
+		}
 
-		return 0;
+		return null;
 	}
 
 	void addNode(ComputerNode cn) {
