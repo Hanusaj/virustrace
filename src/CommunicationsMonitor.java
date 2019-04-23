@@ -10,18 +10,27 @@ class CommunicationsMonitor {
 
 	HashMap<Integer, List<ComputerNode>> computers;
 	ArrayList<int[]> triples;
+	boolean graphCreated;
 
 	CommunicationsMonitor() {
 		this.computers = new HashMap<Integer, List<ComputerNode>>();
 		this.triples = new ArrayList<>();
+		this.graphCreated = false;
 	}
 
 	void addCommunication(int c1, int c2, int timestamp) {
-		int[] triple = { c1, c2, timestamp };
-		triples.add(triple);
+		if (!graphCreated) {
+			int[] triple = { c1, c2, timestamp };
+			triples.add(triple);
+		}
+	}
+
+	public ArrayList<int[]> getCommunicationList() {
+		return triples;
 	}
 
 	void createGraph() {
+		graphCreated = true;
 		triples.sort(new Comparator<int[]>() {
 			@Override
 			public int compare(int[] arg0, int[] arg1) {
@@ -87,7 +96,7 @@ class CommunicationsMonitor {
 			target = BFSQuery(source, c2, y);
 			if (target != null) {
 				LinkedList<ComputerNode> ret = new LinkedList<>();
-				while(target != null) {
+				while (target != null) {
 					ret.addFirst(target);
 					target = target.getPred();
 				}
