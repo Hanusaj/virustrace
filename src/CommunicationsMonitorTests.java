@@ -48,8 +48,48 @@ public class CommunicationsMonitorTests {
 			{11,12,13},
 			{11,13,13},
 			{13,14,16},
-			{13,15, 16},
+			{13,15,16},
 			{14,12,94},
+	};
+	
+	static int communications3[][] = {
+			
+			{4,7,32},
+			{36, 3, 4},
+			{7, 9, 42},
+			{36, 4, 14},
+			{37, 3, 8},
+			{30, 33, 1},
+			{15, 13, 40},
+			{14, 40, 26},
+			{35, 32, 9},
+			{22, 18, 43},
+			{20, 23, 6},
+			{36, 31,  23},
+			{3, 4, 29},
+			{5, 8, 35},
+			{33, 26, 26},
+			{30, 4, 39},
+			{30, 20, 44},
+			{12, 9, 21},
+			{45, 41, 2},
+			{43, 25, 26},
+			{16, 35, 36},
+			{50, 11, 19},
+			{24, 4, 43},
+			{7, 28, 37},
+			{6, 49, 27},
+			{46, 28, 36},
+			{49, 41, 14},
+			{15, 39, 36},
+			{11, 28, 27},
+			{47, 31, 9},
+			{27, 12, 5},
+			{9, 19, 45},
+			{25, 43, 14},
+			{44, 43, 21},
+			{7, 5, 2},
+			{5, 4, 3}
 	};
 	
 	@Test
@@ -145,6 +185,30 @@ public class CommunicationsMonitorTests {
 				"(8, 10)", "(8, 12)", "(10, 12)"};
 		
 		assertTrue(Arrays.equals(expected1, listToStringArr(path)) || Arrays.equals(expected2, listToStringArr(path)));
+	}
+	
+	@Test
+	public void query3a(){
+		CommunicationsMonitor comMonitor3 = new CommunicationsMonitor();
+		int i;
+		for(i=0 ; i<communications3.length ; i++ ){
+			comMonitor3.addCommunication(communications3[i][0], communications3[i][1], communications3[i][2]);
+		}
+		
+		comMonitor3.createGraph();
+				
+		List<ComputerNode> path = comMonitor3.queryInfection(7, 4, 1, 37);
+		if(path == null){
+			System.out.println("no path found");
+		}
+		else{
+			System.out.println("Test query3a found the following infection path:");
+			for(i=0 ; i<path.size() ; i++){
+				System.out.println(path.get(i).toString());
+			} // prints path in the form (c, t)
+			System.out.println();
+		}
+
 	}
 	
 	
