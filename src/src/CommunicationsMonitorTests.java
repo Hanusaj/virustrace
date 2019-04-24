@@ -1,5 +1,4 @@
 package src;
-
 import org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,8 +51,7 @@ public class CommunicationsMonitorTests {
 			{14,12,94},
 	};
 	
-	static int communications3[][] = {
-			
+	static int communications3[][] = {			
 			{4,7,32},
 			{36, 3, 4},
 			{7, 9, 42},
@@ -90,6 +88,16 @@ public class CommunicationsMonitorTests {
 			{44, 43, 21},
 			{7, 5, 2},
 			{5, 4, 3}
+	};
+
+	static int communications4[][] = {
+			{1,2,0},
+			{1,3,0},
+			{2,4,2},
+			{3,5,3},
+			{4,6,4},
+			{5,7,5},
+			{6,7,6},
 	};
 	
 	@Test
@@ -128,7 +136,7 @@ public class CommunicationsMonitorTests {
 			System.out.println(path.get(i).toString());
 		} // prints path in the form (c, t)
 		System.out.println();
-		String expected[] = { "(3, 5)", "(4, 5)", "(4, 8)", "(6, 8)", "(6, 13)", "(8, 13)", "(8, 14)", "(12, 14)"};
+		String expected[] = { "(3, 5)", "(4, 5)", "(4, 8)", "(6, 8)", "(6, 11)", "(6, 13)", "(8, 13)", "(8, 14)", "(12, 14)"};
 		assertArrayEquals(expected, listToStringArr(path));
 	}
 	
@@ -209,6 +217,29 @@ public class CommunicationsMonitorTests {
 			System.out.println();
 		}
 
+	}
+
+	@Test
+	public void query4a(){
+		CommunicationsMonitor comMonitor4 = new CommunicationsMonitor();
+		int i;
+		for(i=0 ; i<communications4.length ; i++ ){
+			comMonitor4.addCommunication(communications4[i][0], communications4[i][1], communications4[i][2]);
+		}
+		
+		comMonitor4.createGraph();
+		List<ComputerNode> path = comMonitor4.queryInfection(1, 7, 0, 6);
+		System.out.println("Test query4a found the following infection path:");
+		for(i=0 ; i<path.size() ; i++){
+			System.out.println(path.get(i).toString());
+		} // prints path in the form (c, t)
+		System.out.println();
+		
+		String expected1[] = { "(1, 0)", "(2, 0)", "(2, 2)", "(4, 2)", "(4, 4)", "(6, 4)", "(6, 6)", 
+								"(7, 6)"};
+		String expected2[] = { "(1, 0)", "(3, 0)", "(3, 3)", "(5, 3)", "(5, 5)", "(7, 5)"};
+		
+		assertTrue(Arrays.equals(expected1, listToStringArr(path)) || Arrays.equals(expected2, listToStringArr(path)));
 	}
 	
 	
