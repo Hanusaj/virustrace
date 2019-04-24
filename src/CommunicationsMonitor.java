@@ -5,13 +5,18 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 
+ * @author Jordan Cowen, Brett Peterson, AJ Hanus
+ *
+ */
 class CommunicationsMonitor {
 
 	HashMap<Integer, List<ComputerNode>> computers;
 	ArrayList<int[]> triples;
 	boolean graphCreated;
 
-	CommunicationsMonitor() {
+	public CommunicationsMonitor() {
 		this.computers = new HashMap<Integer, List<ComputerNode>>();
 		this.triples = new ArrayList<>();
 		this.graphCreated = false;
@@ -28,7 +33,7 @@ class CommunicationsMonitor {
 		return triples;
 	}
 
-	void createGraph() {
+	public void createGraph() {
 		graphCreated = true;
 		triples.sort(new Comparator<int[]>() {
 			@Override
@@ -82,7 +87,7 @@ class CommunicationsMonitor {
 		}
 	}
 
-	List<ComputerNode> queryInfection(int c1, int c2, int x, int y) {
+	public List<ComputerNode> queryInfection(int c1, int c2, int x, int y) {
 		ComputerNode source = null;
 		ComputerNode target = null;
 		for (ComputerNode c1Node : computers.get(c1)) {
@@ -105,15 +110,15 @@ class CommunicationsMonitor {
 		return null;
 	}
 
-	HashMap<Integer, List<ComputerNode>> getComputerMapping() {
+	public HashMap<Integer, List<ComputerNode>> getComputerMapping() {
 		return computers;
 	}
 
-	List<ComputerNode> getComputerMapping(int c) {
+	public List<ComputerNode> getComputerMapping(int c) {
 		return computers.get(c);
 	}
 
-	ComputerNode BFSQuery(ComputerNode source, int targetComp, int deadline) {
+	public ComputerNode BFSQuery(ComputerNode source, int targetComp, int deadline) {
 		LinkedList<ComputerNode> Q = new LinkedList<ComputerNode>();
 
 		for (int c : computers.keySet()) {
@@ -149,7 +154,7 @@ class CommunicationsMonitor {
 		return null;
 	}
 
-	void addNode(ComputerNode cn) {
+	public void addNode(ComputerNode cn) {
 		if (this.computers.get(cn.getID()) == null) {
 			List<ComputerNode> l = new LinkedList<ComputerNode>();
 			l.add(cn);
@@ -157,23 +162,6 @@ class CommunicationsMonitor {
 		} else {
 			this.computers.get(cn.getID()).add(cn);
 		}
-	}
-
-	public static void main(String[] args) {
-		int compMap[][] = { { 1, 4, 12 }, { 1, 2, 4 }, { 2, 4, 8 }, { 3, 4, 8 } };
-		CommunicationsMonitor cMon = new CommunicationsMonitor();
-		for (int i = 0; i < compMap.length; i++) {
-			cMon.addCommunication(compMap[i][0], compMap[i][1], compMap[i][2]);
-		}
-		cMon.createGraph();
-		HashMap<Integer, List<ComputerNode>> compMapping = cMon.getComputerMapping();
-
-		// Check Size
-		System.out.println("Number nodes: " + compMapping.size());
-
-		// Check for node 4
-		// String msg = checkCNList(compMapping.get(4), new int[][]{{4, 8},{4, 12}});
-		// if(!msg.equals("")) fail("Incorrect list in HashMap for key 4, "+msg);
 	}
 
 }

@@ -6,6 +6,11 @@ enum Color {
 	WHITE, GRAY, BLACK;
 }
 
+/**
+ * 
+ * @author Jordan Cowen, Brett Peterson, AJ Hanus
+ *
+ */
 class ComputerNode {
 
 	int ID;
@@ -33,25 +38,25 @@ class ComputerNode {
 
 	List<ComputerNode> outNodes;
 
-	ComputerNode(int id, int time) {
+	public ComputerNode(int id, int time) {
 		this.ID = id;
 		this.timestamp = time;
 		this.outNodes = new LinkedList<ComputerNode>();
 	}
 
-	int getID() {
+	public int getID() {
 		return this.ID;
 	}
 
-	int getTimestamp() {
+	public int getTimestamp() {
 		return this.timestamp;
 	}
 
-	void addEdge(ComputerNode cn) {
+	public void addEdge(ComputerNode cn) {
 		this.outNodes.add(cn);
 	}
 
-	List<ComputerNode> getOutNeighbors() {
+	public List<ComputerNode> getOutNeighbors() {
 		return this.outNodes;
 	}
 	
