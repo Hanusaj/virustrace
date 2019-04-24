@@ -1,5 +1,4 @@
 package src;
-
 import org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,6 +51,16 @@ public class CommunicationsMonitorTests {
 			{14,12,94},
 	};
 	
+	static int communications3[][] = {
+			{1,2,0},
+			{1,3,0},
+			{2,4,2},
+			{3,5,3},
+			{4,6,4},
+			{5,7,5},
+			{6,7,6},
+	};
+	
 	@Test
 	public void query1a(){
 		CommunicationsMonitor comMonitor1 = new CommunicationsMonitor();
@@ -88,7 +97,7 @@ public class CommunicationsMonitorTests {
 			System.out.println(path.get(i).toString());
 		} // prints path in the form (c, t)
 		System.out.println();
-		String expected[] = { "(3, 5)", "(4, 5)", "(4, 8)", "(6, 8)", "(6, 13)", "(8, 13)", "(8, 14)", "(12, 14)"};
+		String expected[] = { "(3, 5)", "(4, 5)", "(4, 8)", "(6, 8)", "(6, 11)", "(6, 13)", "(8, 13)", "(8, 14)", "(12, 14)"};
 		assertArrayEquals(expected, listToStringArr(path));
 	}
 	
@@ -143,6 +152,30 @@ public class CommunicationsMonitorTests {
 								"(8, 10)", "(8, 12)", "(10, 12)"};
 		String expected2[] = { "(1, 1)", "(2, 1)", "(2, 6)", "(2, 7)", "(4, 7)", "(4, 8)", "(4, 10)", 
 				"(8, 10)", "(8, 12)", "(10, 12)"};
+		
+		assertTrue(Arrays.equals(expected1, listToStringArr(path)) || Arrays.equals(expected2, listToStringArr(path)));
+	}
+	
+	@Test
+	public void query3a(){
+		CommunicationsMonitor comMonitor3 = new CommunicationsMonitor();
+		int i;
+		for(i=0 ; i<communications3.length ; i++ ){
+			comMonitor3.addCommunication(communications3[i][0], communications3[i][1], communications3[i][2]);
+		}
+		
+		comMonitor3.createGraph();
+				
+		List<ComputerNode> path = comMonitor3.queryInfection(1, 7, 0, 6);
+		System.out.println("Test query3a found the following infection path:");
+		for(i=0 ; i<path.size() ; i++){
+			System.out.println(path.get(i).toString());
+		} // prints path in the form (c, t)
+		System.out.println();
+		
+		String expected1[] = { "(1, 0)", "(2, 0)", "(2, 2)", "(4, 2)", "(4, 4)", "(6, 4)", "(6, 6)", 
+								"(7, 6)"};
+		String expected2[] = { "(1, 0)", "(3, 0)", "(3, 3)", "(5, 3)", "(5, 5)", "(7, 5)"};
 		
 		assertTrue(Arrays.equals(expected1, listToStringArr(path)) || Arrays.equals(expected2, listToStringArr(path)));
 	}
